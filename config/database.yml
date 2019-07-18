@@ -9,7 +9,7 @@ default: &default
 
 development:
  <<: *default
- database:
+ database: gemini-dev
 
 test:
  <<: *default
