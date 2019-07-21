@@ -7,6 +7,7 @@ gem 'puma', '~> 3.7'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '~> 0.18.2'
 gem 'devise'
+gem 'devise_token_auth'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
