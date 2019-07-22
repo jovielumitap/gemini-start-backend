@@ -11,5 +11,13 @@ module GeminiStartBackend
   class Application < Rails::Application
     config.secret_key_base = ENV['SECRET_KEY_BASE']
     config.autoload_paths += %W(#{config.root}/lib)
+
+    # Rails 5 CORS Config
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], expose: ['Access-Token', 'Uid', 'Client']
+      end
+    end
   end
 end

@@ -8,8 +8,8 @@ module Api
 
       def sign_up_params
         params.require(:user).permit(
-            :email, :password, :password_confirmation,
-            :username, :picture
+            :email,
+            :password,
         )
       end
 

@@ -7,7 +7,6 @@ class User < ApplicationRecord
 
 
   validates :uid, uniqueness: { scope: :provider }
-  validates :username, uniqueness: true
 
   before_validation :init_uid
 
