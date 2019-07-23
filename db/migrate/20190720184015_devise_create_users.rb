@@ -35,6 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string   :user_type,                  default: ""
       t.string   :first_name,                 default: ""
       t.string   :last_name,                  default: ""
+      t.string   :picture,                    default: ""
       t.string   :business_name,              default: ""
       t.string   :address,                    default: ""
       t.string   :home_number,                default: ""
@@ -47,8 +48,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string   :phone,                      default: ""
       t.string   :pec,                        default: ""
       t.string   :cuu,                        default: ""
-      t.string   :category,                   default: ""
-      t.string   :sub_category,               default: ""
+      t.string   :specialization,             default: ""
       t.string   :building,                   default: ""
 
       t.timestamps null: false

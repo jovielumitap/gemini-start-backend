@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190721091000) do
+ActiveRecord::Schema.define(version: 20190723083821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -29,6 +36,7 @@ ActiveRecord::Schema.define(version: 20190721091000) do
     t.string "user_type", default: ""
     t.string "first_name", default: ""
     t.string "last_name", default: ""
+    t.string "picture", default: ""
     t.string "business_name", default: ""
     t.string "address", default: ""
     t.string "home_number", default: ""
@@ -41,17 +49,19 @@ ActiveRecord::Schema.define(version: 20190721091000) do
     t.string "phone", default: ""
     t.string "pec", default: ""
     t.string "cuu", default: ""
-    t.string "category", default: ""
-    t.string "sub_category", default: ""
+    t.string "specialization", default: ""
     t.string "building", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.json "tokens"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_users_on_category_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "users", "categories"
 end

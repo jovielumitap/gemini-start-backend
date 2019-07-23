@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   before_validation :init_uid
 
+  belongs_to :category
   private
 
   def uses_email?

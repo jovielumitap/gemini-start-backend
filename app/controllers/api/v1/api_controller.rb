@@ -48,6 +48,10 @@ module Api
         logger.info(exception) # for logging
         render json: { error: exception.message }, status: :bad_request
       end
+
+      def json_response(object, status = :ok)
+        render json: object, status: status
+      end
     end
   end
 end

@@ -1,1 +1,3 @@
-User.create!(email: 'admin@test.com', password: 'admin123', user_type: 'admin') unless User.find_by(email: 'admin@test.com')
+nocategory = Category.create!(name: "nocategory", active: false) unless Category.find_by(name: 'nocategory')
+
+User.create!(email: 'admin@test.com', password: 'admin123', user_type: 'admin', category_id: nocategory.id) unless User.find_by(email: 'admin@test.com')
