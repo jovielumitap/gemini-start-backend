@@ -8,7 +8,7 @@ module Api
       end
 
       def index
-        @categories = Category.all
+        @categories = Category.where.not(name: 'nocategory').sort_by_id_asc
         json_response({ categories: @categories })
       end
 
@@ -30,7 +30,7 @@ module Api
       private
 
       def category_params
-        params.require(:category).permit(:name)
+        params.require(:category).permit(:name, :active)
       end
       def category
         @category = Category.find(category_id)

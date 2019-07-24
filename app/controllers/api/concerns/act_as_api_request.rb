@@ -10,7 +10,7 @@ module Api
       end
 
       def check_json_request
-        head :not_acceptable unless request.content_type =~ /json/
+        head :not_acceptable unless request.content_type =~ /json/ || %w(get delete).include?(request.method.downcase)
       end
 
       def skip_session_storage
