@@ -11,6 +11,9 @@ class User < ApplicationRecord
   before_validation :init_uid
 
   belongs_to :category
+
+  scope :by_type, ->(user_type) { where(user_type: user_type) }
+
   private
 
   def uses_email?

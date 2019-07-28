@@ -19,5 +19,17 @@ module GeminiStartBackend
         resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], expose: ['Access-Token', 'Uid', 'Client', 'Content-Type']
       end
     end
+
+    #Mail config
+    ActionMailer::Base.smtp_settings = {
+        :address => 'smtp address',
+        :port => 'smtp_port',
+        :domain => 'sender_email_domain',
+        :authentication => 'plain',
+        :user_name => 'user_name',
+        :password => 'password',
+        :enable_starttls_auto => true,
+        :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
+    }
   end
 end

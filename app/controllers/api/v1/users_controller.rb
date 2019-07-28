@@ -13,11 +13,28 @@ module Api
 
       def index
         users = User.where.not(user_type: 'admin').sort_by_id_asc
-        json_response({users: users})
+        if params[:user_type]
+          users = users.by_type(params[:user_type])
+          json_response({users: users})
+        else
+          collaborators = users.by_type('collaborator')
+          managers = users.by_type('manager')
+          maintainers = users.by_type('maintainer')
+          sub_workers = users.by_type('sub_worker')
+          end_users = users.by_type('user')
+          json_response({
+                            collaborators: collaborators,
+                            managers: managers,
+                            maintainers: maintainers,
+                            sub_workers: sub_workers,
+                            end_users: end_users,
+                        })
+        end
       end
 
       def create
         user = User.create!(register_params)
+        UserMailer.register_user(register_params)
         json_response({user: user})
       end
 
@@ -30,8 +47,8 @@ module Api
       def register_params
         params.require(:user).permit(
             :user_type, :first_name, :last_name, :picture, :business_name, :address, :home_number, :zip_code, :city,
-            :province, :cod_fisc, :p_lva, :mobile, :phone, :pec, :cuu, :specialization, :building,
-            :category,
+            :province, :cod_fisc, :p_lva, :mobile, :phone, :pec, :cuu, :specialization, :building, :count_building_to_manage,
+            :category_id,
             :email,
             :password,
         )
