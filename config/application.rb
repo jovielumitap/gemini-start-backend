@@ -22,12 +22,12 @@ module GeminiStartBackend
 
     #Mail config
     ActionMailer::Base.smtp_settings = {
-        :address => 'smtp address',
-        :port => 'smtp_port',
-        :domain => 'sender_email_domain',
+        :address => 'smtps.aruba.it',
+        :port => 465,
+        :domain => 'imap.geminismart.cloud',
         :authentication => 'plain',
-        :user_name => 'user_name',
-        :password => 'password',
+        :user_name => 'info@geoplansrl.com',
+        :password => 'geminismart',
         :enable_starttls_auto => true,
         :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
     }

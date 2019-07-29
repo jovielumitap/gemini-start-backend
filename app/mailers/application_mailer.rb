@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@gemini-start.com'
+  default from: 'noreplay@geminismart.cloud'
   layout 'mailer'
 end

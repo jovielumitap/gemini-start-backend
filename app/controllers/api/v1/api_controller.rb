@@ -6,7 +6,7 @@ module Api
       include Concerns::ActAsApiRequest
       include DeviseTokenAuth::Concerns::SetUserByToken
 
-      before_action :authenticate_user!, except: :status
+      before_action :authenticate_user!, except: [:status, :send_mail]
 
       layout false
       respond_to :json

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
         resources :users, only: [:index, :show]
         resource :user, only: :create
         resources :categories
+
+        get :test_mail, to: 'testapis#send_mail'
       end
     end
   end
