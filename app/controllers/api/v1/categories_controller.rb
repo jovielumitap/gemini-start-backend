@@ -30,7 +30,7 @@ module Api
       private
 
       def category_params
-        params.require(:category).permit(:name, :active)
+        params.require(:category).permit(:name, :active, :category_type)
       end
       def category
         @category = Category.find(category_id)

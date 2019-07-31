@@ -17,15 +17,21 @@ module Api
           users = users.by_type(params[:user_type])
           json_response({users: users})
         else
+          agencies = users.by_type('agency')
           collaborators = users.by_type('collaborator')
           managers = users.by_type('manager')
           maintainers = users.by_type('maintainer')
+          professionals = users.by_type('professional')
+          stockists = users.by_type('stockist')
           sub_workers = users.by_type('sub_worker')
           end_users = users.by_type('user')
           json_response({
+                            agencies: agencies,
                             collaborators: collaborators,
                             managers: managers,
                             maintainers: maintainers,
+                            professionals: professionals,
+                            stockists: stockists,
                             sub_workers: sub_workers,
                             end_users: end_users,
                         })
@@ -34,7 +40,7 @@ module Api
 
       def create
         user = User.create!(register_params)
-        UserMailer.register_user(register_params)
+        UserMailer.register_user(register_params).deliver
         json_response({user: user})
       end
 
