@@ -49,8 +49,8 @@ module Api
         render json: { error: exception.message }, status: :bad_request
       end
 
-      def json_response(object, status = :ok)
-        render json: object, status: status
+      def json_response(object, include = nil, status = :ok)
+        render json: object, include: include, status: status
       end
     end
   end

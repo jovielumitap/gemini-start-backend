@@ -15,7 +15,7 @@ module Api
         users = User.where.not(user_type: 'admin').sort_by_id_asc
         if params[:user_type]
           users = users.by_type(params[:user_type])
-          json_response({users: users})
+          json_response({users: users}, include)
         else
           agencies = users.by_type('agency')
           collaborators = users.by_type('collaborator')
@@ -34,7 +34,7 @@ module Api
                             stockists: stockists,
                             sub_workers: sub_workers,
                             end_users: end_users,
-                        })
+                        }, include)
         end
       end
 
@@ -60,6 +60,9 @@ module Api
         )
       end
 
+      def include
+        {:category => {:only => :name}}
+      end
       def user
         @user ||= user_id.present? ? User.find(user_id) : current_user
       end
