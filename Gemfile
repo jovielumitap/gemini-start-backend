@@ -10,6 +10,12 @@ gem 'devise'
 gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'letter_opener', '~> 1.4.1'
+# Uploads
+gem 'carrierwave'
+gem 'fog', require: 'fog/aws'
+gem 'aws-sdk'
+# Image processing
+gem 'mini_magick'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

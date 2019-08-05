@@ -43,7 +43,6 @@ module Api
         UserMailer.register_user(register_params).deliver
         json_response({user: user})
       end
-
       def profile
         render :show
       end

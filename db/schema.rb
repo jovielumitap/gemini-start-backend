@@ -10,10 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190731074046) do
+ActiveRecord::Schema.define(version: 20190805110310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bodies", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "address"
+    t.string "zip_code"
+    t.string "city"
+    t.string "province"
+    t.string "cod_fisc"
+    t.bigint "body_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body_type_id"], name: "index_bodies_on_body_type_id"
+  end
+
+  create_table "body_types", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "building_types", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "buildings", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "address"
+    t.string "zip_code"
+    t.string "city"
+    t.string "province"
+    t.string "cod_fisc"
+    t.bigint "building_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["building_type_id"], name: "index_buildings_on_building_type_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -21,6 +61,32 @@ ActiveRecord::Schema.define(version: 20190731074046) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category_type", default: "", null: false
+  end
+
+  create_table "components", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "outdoors", force: :cascade do |t|
+    t.string "condition"
+    t.string "note"
+    t.string "attachment"
+    t.bigint "component_id", null: false
+    t.bigint "sub_component_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_outdoors_on_component_id"
+    t.index ["sub_component_id"], name: "index_outdoors_on_sub_component_id"
+  end
+
+  create_table "sub_components", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,5 +131,9 @@ ActiveRecord::Schema.define(version: 20190731074046) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "bodies", "body_types"
+  add_foreign_key "buildings", "building_types"
+  add_foreign_key "outdoors", "components"
+  add_foreign_key "outdoors", "sub_components"
   add_foreign_key "users", "categories"
 end
