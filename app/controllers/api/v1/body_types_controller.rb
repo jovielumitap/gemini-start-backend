@@ -9,7 +9,7 @@ module Api
 
       def index
         body_types = BodyType.all.sort_by_id_asc
-        json_response({ building_types: body_types })
+        json_response({ body_types: body_types })
       end
 
       def create
@@ -23,7 +23,7 @@ module Api
       end
 
       def destroy
-        building_type.destroy
+        body_type.destroy
         json_response({ delete: 'success' })
       end
 
