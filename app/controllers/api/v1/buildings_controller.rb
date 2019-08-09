@@ -13,6 +13,7 @@ module Api
       end
 
       def create
+        code = gen_random_string(7)
         building = Building.create!(building_params)
         json_response({building: building})
       end

@@ -5,7 +5,7 @@ module Api
     class ApiController < ApplicationController
       include Concerns::ActAsApiRequest
       include DeviseTokenAuth::Concerns::SetUserByToken
-
+      include Helpers::ApplicationHelper
       before_action :authenticate_user!, except: [:status, :send_mail]
 
       layout false
