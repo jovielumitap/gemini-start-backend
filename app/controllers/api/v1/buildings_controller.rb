@@ -9,11 +9,12 @@ module Api
 
       def index
         buildings = Building.all.sort_by_id_asc
-        json_response({buildings: buildings})
+        json_response({buildings: buildings}, include)
       end
 
       def create
         code = gen_random_string(7)
+        building_params.merge({ building_code: code})
         building = Building.create!(building_params)
         json_response({building: building})
       end
@@ -41,6 +42,10 @@ module Api
       end
       def building_id
         params[:id]
+      end
+
+      def include
+        {:building_type => {:only => :name}}
       end
     end
   end
