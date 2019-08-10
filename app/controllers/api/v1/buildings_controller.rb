@@ -9,16 +9,18 @@ module Api
 
       def index
         buildings = Building.all.sort_by_id_asc
-        json_response({buildings: buildings}, include)
+        json_response({buildings: buildings}, include_param)
       end
 
       def create
-        code = gen_random_string(7)
-        building_params.merge({ building_code: code})
-        building = Building.create!(building_params)
+        param = building_params.merge!({building_code: code})
+        building = Building.create!(param)
         json_response({building: building})
       end
-
+      def update
+        building.update!(building_params)
+        json_response({ building: @building })
+      end
       def destroy
         building.destroy
         json_response({delete: "success"})
@@ -44,8 +46,12 @@ module Api
         params[:id]
       end
 
-      def include
-        {:building_type => {:only => :name}}
+      def include_param
+        {:building_type => {:only => :name}, :bodies => {:only => [:id, :name]}}
+      end
+
+      def code
+        gen_random_string(7)
       end
     end
   end

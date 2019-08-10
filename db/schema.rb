@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190809081907) do
+ActiveRecord::Schema.define(version: 20190809130543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,9 @@ ActiveRecord::Schema.define(version: 20190809081907) do
     t.bigint "body_type_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "building_id"
     t.index ["body_type_id"], name: "index_bodies_on_body_type_id"
+    t.index ["building_id"], name: "index_bodies_on_building_id"
   end
 
   create_table "body_types", force: :cascade do |t|
@@ -79,6 +81,8 @@ ActiveRecord::Schema.define(version: 20190809081907) do
     t.bigint "sub_component_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "body_id"
+    t.index ["body_id"], name: "index_outdoors_on_body_id"
     t.index ["component_id"], name: "index_outdoors_on_component_id"
     t.index ["sub_component_id"], name: "index_outdoors_on_sub_component_id"
   end
@@ -133,7 +137,9 @@ ActiveRecord::Schema.define(version: 20190809081907) do
   end
 
   add_foreign_key "bodies", "body_types"
+  add_foreign_key "bodies", "buildings"
   add_foreign_key "buildings", "building_types"
+  add_foreign_key "outdoors", "bodies"
   add_foreign_key "outdoors", "components"
   add_foreign_key "outdoors", "sub_components"
   add_foreign_key "users", "categories"
