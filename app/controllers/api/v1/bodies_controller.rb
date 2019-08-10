@@ -9,7 +9,7 @@ module Api
 
       def index
         bodies = Body.all.sort_by_id_asc
-        json_response({bodies: bodies})
+        json_response({bodies: bodies}, include_param)
       end
 
       def create
@@ -38,6 +38,11 @@ module Api
             :cod_fisc
         )
       end
+
+      def include_param
+        {:body_type => {:only => :name}}
+      end
+
       def body_id
         params[:id]
       end
