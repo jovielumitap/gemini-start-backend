@@ -8,15 +8,20 @@ module Api
       end
 
       def index
-        bodies = Body.all.sort_by_id_asc
+        building_id = params[:building_id]
+        bodies = Body.filter_by_building_id(building_id).sort_by_id_asc
         json_response({bodies: bodies}, include_param)
       end
 
       def create
-        body = Body.create!(body_params)
+        param = body_params.merge!({body_code: code})
+        body = Body.create!(param)
         json_response({body: body})
       end
-
+      def update
+        body.update!(body_params)
+        json_response({ body: @body })
+      end
       def destroy
         body.destroy
         json_response({delete: "success"})
@@ -29,6 +34,7 @@ module Api
 
       def body_params
         params.require(:body).permit(
+            :building_id,
             :body_type_id,
             :name,
             :address,
@@ -45,6 +51,9 @@ module Api
 
       def body_id
         params[:id]
+      end
+      def code
+        gen_random_string(7)
       end
     end
   end
