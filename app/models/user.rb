@@ -11,6 +11,8 @@ class User < ApplicationRecord
   before_validation :init_uid
 
   belongs_to :category
+  has_many :primary_rents, :class_name => "Rent", :foreign_key => "landlord_id"
+  has_many :secondary_rents, :class_name => "Rent", :foreign_key => "tenant_id"
 
   scope :by_type, ->(user_type) { where(user_type: user_type) }
 

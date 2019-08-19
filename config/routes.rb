@@ -18,6 +18,12 @@ Rails.application.routes.draw do
         resources :components
         resources :sub_components
         resources :outdoors
+        resources :targets, only: [:show, :index]
+        resources :floors
+        resources :contract_types, only: [:show, :index]
+        resources :registration_tax_types, only: [:show, :index]
+        resources :payment_frequencies, only: [:show, :index]
+        resources :rents
 
         get :test_mail, to: 'testapis#send_mail'
       end

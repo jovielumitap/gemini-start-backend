@@ -24,6 +24,8 @@ module Api
           professionals = users.by_type('professional')
           stockists = users.by_type('stockist')
           sub_workers = users.by_type('sub_worker')
+          landlords = users.by_type('landlord')
+          tenants = users.by_type('tenant')
           end_users = users.by_type('user')
           json_response({
                             agencies: agencies,
@@ -34,6 +36,8 @@ module Api
                             stockists: stockists,
                             sub_workers: sub_workers,
                             end_users: end_users,
+                            landlords: landlords,
+                            tenants: tenants
                         }, include)
         end
       end

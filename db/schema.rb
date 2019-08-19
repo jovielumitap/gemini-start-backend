@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190812073539) do
+ActiveRecord::Schema.define(version: 20190819105832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,23 @@ ActiveRecord::Schema.define(version: 20190812073539) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "contract_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "floors", force: :cascade do |t|
+    t.string "name"
+    t.string "attachment"
+    t.bigint "target_id", null: false
+    t.bigint "body_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body_id"], name: "index_floors_on_body_id"
+    t.index ["target_id"], name: "index_floors_on_target_id"
+  end
+
   create_table "outdoors", force: :cascade do |t|
     t.string "condition"
     t.string "note"
@@ -89,9 +106,58 @@ ActiveRecord::Schema.define(version: 20190812073539) do
     t.index ["sub_component_id"], name: "index_outdoors_on_sub_component_id"
   end
 
+  create_table "payment_frequencies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "registration_tax_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rents", force: :cascade do |t|
+    t.string "fg"
+    t.string "fg_part"
+    t.string "sub"
+    t.string "category"
+    t.string "rent_class"
+    t.string "contract_description"
+    t.string "reg_date"
+    t.string "reg_number"
+    t.string "rental_fee"
+    t.string "storage_code"
+    t.boolean "registered", default: false
+    t.string "note"
+    t.string "expiry_date"
+    t.string "expiry_notice_date"
+    t.string "ISTAL_update_date"
+    t.string "end_date"
+    t.bigint "contract_type_id", null: false
+    t.bigint "registration_tax_type_id", null: false
+    t.bigint "payment_frequency_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "landlord_id"
+    t.integer "tenant_id"
+    t.bigint "body_id"
+    t.index ["body_id"], name: "index_rents_on_body_id"
+    t.index ["contract_type_id"], name: "index_rents_on_contract_type_id"
+    t.index ["payment_frequency_id"], name: "index_rents_on_payment_frequency_id"
+    t.index ["registration_tax_type_id"], name: "index_rents_on_registration_tax_type_id"
+  end
+
   create_table "sub_components", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "targets", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -141,8 +207,14 @@ ActiveRecord::Schema.define(version: 20190812073539) do
   add_foreign_key "bodies", "body_types"
   add_foreign_key "bodies", "buildings"
   add_foreign_key "buildings", "building_types"
+  add_foreign_key "floors", "bodies"
+  add_foreign_key "floors", "targets"
   add_foreign_key "outdoors", "buildings"
   add_foreign_key "outdoors", "components"
   add_foreign_key "outdoors", "sub_components"
+  add_foreign_key "rents", "bodies"
+  add_foreign_key "rents", "contract_types"
+  add_foreign_key "rents", "payment_frequencies"
+  add_foreign_key "rents", "registration_tax_types"
   add_foreign_key "users", "categories"
 end
