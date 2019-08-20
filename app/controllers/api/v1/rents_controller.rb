@@ -49,7 +49,7 @@ module Api
             :note,
             :expiry_date,
             :expiry_notice_date,
-            :ISTAL_update_date,
+            :ISTAT_update_date,
             :end_date,
             :payment_frequency_id,
             :contract_type_id,

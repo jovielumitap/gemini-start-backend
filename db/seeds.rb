@@ -21,3 +21,8 @@ end
 ["Free", "Monthly", "Quarterly", "Annual", "Two years", "Three years", "Four years", "Five years"].each do |payment_frequency|
   PaymentFrequency.create(name: payment_frequency) unless PaymentFrequency.find_by(name: payment_frequency)
 end
+
+#Seed Compliance
+["Compliant", "To be tested", "Not up to standard", "Not certified"].each do |compliance|
+  Compliance.create(name: compliance) unless Compliance.find_by(name: compliance)
+end

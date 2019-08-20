@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190819105832) do
+ActiveRecord::Schema.define(version: 20190820155434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 20190819105832) do
     t.bigint "building_id"
     t.index ["body_type_id"], name: "index_bodies_on_body_type_id"
     t.index ["building_id"], name: "index_bodies_on_building_id"
+  end
+
+  create_table "body_systems", force: :cascade do |t|
+    t.string "component"
+    t.string "brand"
+    t.string "system_model"
+    t.string "description"
+    t.string "attachment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "body_id", null: false
+    t.index ["body_id"], name: "index_body_systems_on_body_id"
   end
 
   create_table "body_types", force: :cascade do |t|
@@ -67,6 +79,12 @@ ActiveRecord::Schema.define(version: 20190819105832) do
     t.string "category_type", default: "", null: false
   end
 
+  create_table "compliances", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "components", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.boolean "active", default: true, null: false
@@ -78,6 +96,28 @@ ActiveRecord::Schema.define(version: 20190819105832) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "document_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "reg_date"
+    t.string "reg_number"
+    t.string "storage_code"
+    t.string "note"
+    t.string "attachment"
+    t.bigint "body_id", null: false
+    t.bigint "document_type_id", null: false
+    t.bigint "compliance_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body_id"], name: "index_documents_on_body_id"
+    t.index ["compliance_id"], name: "index_documents_on_compliance_id"
+    t.index ["document_type_id"], name: "index_documents_on_document_type_id"
   end
 
   create_table "floors", force: :cascade do |t|
@@ -129,11 +169,10 @@ ActiveRecord::Schema.define(version: 20190819105832) do
     t.string "reg_number"
     t.string "rental_fee"
     t.string "storage_code"
-    t.boolean "registered", default: false
     t.string "note"
     t.string "expiry_date"
     t.string "expiry_notice_date"
-    t.string "ISTAL_update_date"
+    t.string "ISTAT_update_date"
     t.string "end_date"
     t.bigint "contract_type_id", null: false
     t.bigint "registration_tax_type_id", null: false
@@ -206,7 +245,11 @@ ActiveRecord::Schema.define(version: 20190819105832) do
 
   add_foreign_key "bodies", "body_types"
   add_foreign_key "bodies", "buildings"
+  add_foreign_key "body_systems", "bodies"
   add_foreign_key "buildings", "building_types"
+  add_foreign_key "documents", "bodies"
+  add_foreign_key "documents", "compliances"
+  add_foreign_key "documents", "document_types"
   add_foreign_key "floors", "bodies"
   add_foreign_key "floors", "targets"
   add_foreign_key "outdoors", "buildings"

@@ -24,6 +24,10 @@ Rails.application.routes.draw do
         resources :registration_tax_types, only: [:show, :index]
         resources :payment_frequencies, only: [:show, :index]
         resources :rents
+        resources :body_systems
+        resources :document_types
+        resources :compliances
+        resources :documents
 
         get :test_mail, to: 'testapis#send_mail'
       end
