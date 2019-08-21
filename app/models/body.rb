@@ -5,6 +5,7 @@ class Body < ApplicationRecord
   has_many :rents
   has_many :body_systems
   has_many :documents
+  has_many :certificates
 
   scope :filter_by_building_id, -> (building_id) { where(building_id: building_id) }
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190820155434) do
+ActiveRecord::Schema.define(version: 20190821083451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,30 @@ ActiveRecord::Schema.define(version: 20190820155434) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category_type", default: "", null: false
+  end
+
+  create_table "certificate_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "certificates", force: :cascade do |t|
+    t.string "reg_date"
+    t.string "reg_number"
+    t.string "storage_code"
+    t.string "note"
+    t.string "expiry_date"
+    t.string "expiry_notice_date"
+    t.string "attachment"
+    t.bigint "body_id", null: false
+    t.bigint "certificate_type_id", null: false
+    t.bigint "compliance_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body_id"], name: "index_certificates_on_body_id"
+    t.index ["certificate_type_id"], name: "index_certificates_on_certificate_type_id"
+    t.index ["compliance_id"], name: "index_certificates_on_compliance_id"
   end
 
   create_table "compliances", force: :cascade do |t|
@@ -182,6 +206,8 @@ ActiveRecord::Schema.define(version: 20190820155434) do
     t.integer "landlord_id"
     t.integer "tenant_id"
     t.bigint "body_id"
+    t.string "registration_tax", default: "", null: false
+    t.string "rent_model", default: "", null: false
     t.index ["body_id"], name: "index_rents_on_body_id"
     t.index ["contract_type_id"], name: "index_rents_on_contract_type_id"
     t.index ["payment_frequency_id"], name: "index_rents_on_payment_frequency_id"
@@ -247,6 +273,9 @@ ActiveRecord::Schema.define(version: 20190820155434) do
   add_foreign_key "bodies", "buildings"
   add_foreign_key "body_systems", "bodies"
   add_foreign_key "buildings", "building_types"
+  add_foreign_key "certificates", "bodies"
+  add_foreign_key "certificates", "certificate_types"
+  add_foreign_key "certificates", "compliances"
   add_foreign_key "documents", "bodies"
   add_foreign_key "documents", "compliances"
   add_foreign_key "documents", "document_types"

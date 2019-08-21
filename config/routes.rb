@@ -28,6 +28,8 @@ Rails.application.routes.draw do
         resources :document_types
         resources :compliances
         resources :documents
+        resources :certificate_types
+        resources :certificates
 
         get :test_mail, to: 'testapis#send_mail'
       end
