@@ -30,6 +30,9 @@ Rails.application.routes.draw do
         resources :documents
         resources :certificate_types
         resources :certificates
+        resources :cadastral_kinds
+        resources :cadastrals
+        resources :insurances
 
         get :test_mail, to: 'testapis#send_mail'
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190821083451) do
+ActiveRecord::Schema.define(version: 20190827084440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,48 @@ ActiveRecord::Schema.define(version: 20190821083451) do
     t.datetime "updated_at", null: false
     t.string "building_code"
     t.index ["building_type_id"], name: "index_buildings_on_building_type_id"
+  end
+
+  create_table "cadastral_kinds", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cadastrals", force: :cascade do |t|
+    t.string "carastral_type"
+    t.string "province"
+    t.string "section_register"
+    t.string "fg"
+    t.string "sub"
+    t.string "category"
+    t.string "census_area"
+    t.string "consistancy"
+    t.string "reg_date"
+    t.string "address"
+    t.string "data_from"
+    t.string "heading"
+    t.string "note"
+    t.string "city"
+    t.string "area_mq"
+    t.string "name"
+    t.string "part"
+    t.string "sub_part"
+    t.string "cadastral_class"
+    t.string "micro_zone"
+    t.string "income"
+    t.string "agricultural_income"
+    t.string "dominicale_income"
+    t.string "deduction"
+    t.string "attachment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "body_id", null: false
+    t.bigint "cadastral_kind_id", null: false
+    t.bigint "compliance_id", null: false
+    t.index ["body_id"], name: "index_cadastrals_on_body_id"
+    t.index ["cadastral_kind_id"], name: "index_cadastrals_on_cadastral_kind_id"
+    t.index ["compliance_id"], name: "index_cadastrals_on_compliance_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -153,6 +195,25 @@ ActiveRecord::Schema.define(version: 20190821083451) do
     t.datetime "updated_at", null: false
     t.index ["body_id"], name: "index_floors_on_body_id"
     t.index ["target_id"], name: "index_floors_on_target_id"
+  end
+
+  create_table "insurances", force: :cascade do |t|
+    t.integer "agency_id"
+    t.integer "contractor_id"
+    t.string "company"
+    t.string "policy_branch"
+    t.string "policy_number"
+    t.string "stipulation_date"
+    t.string "expiration_date"
+    t.string "warning_date"
+    t.string "note"
+    t.string "attachment"
+    t.bigint "body_id", null: false
+    t.bigint "payment_frequency_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body_id"], name: "index_insurances_on_body_id"
+    t.index ["payment_frequency_id"], name: "index_insurances_on_payment_frequency_id"
   end
 
   create_table "outdoors", force: :cascade do |t|
@@ -273,6 +334,9 @@ ActiveRecord::Schema.define(version: 20190821083451) do
   add_foreign_key "bodies", "buildings"
   add_foreign_key "body_systems", "bodies"
   add_foreign_key "buildings", "building_types"
+  add_foreign_key "cadastrals", "bodies"
+  add_foreign_key "cadastrals", "cadastral_kinds"
+  add_foreign_key "cadastrals", "compliances"
   add_foreign_key "certificates", "bodies"
   add_foreign_key "certificates", "certificate_types"
   add_foreign_key "certificates", "compliances"
@@ -281,6 +345,8 @@ ActiveRecord::Schema.define(version: 20190821083451) do
   add_foreign_key "documents", "document_types"
   add_foreign_key "floors", "bodies"
   add_foreign_key "floors", "targets"
+  add_foreign_key "insurances", "bodies"
+  add_foreign_key "insurances", "payment_frequencies"
   add_foreign_key "outdoors", "buildings"
   add_foreign_key "outdoors", "components"
   add_foreign_key "outdoors", "sub_components"
