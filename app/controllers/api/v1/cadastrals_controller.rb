@@ -33,13 +33,15 @@ module Api
       def cadastral_params
         params.require(:body).permit(
             :body_id,
-            :cadastral_kind_id,
+            :kind_id,
             :compliance_id,
-            :carastral_type,
+            :cadastral_type,
             :province,
             :section_register,
             :fg,
+            :part_fg,
             :sub,
+            :sub_part,
             :category,
             :census_area,
             :consistancy,
@@ -52,7 +54,6 @@ module Api
             :area_mq,
             :part,
             :name,
-            :sub_part,
             :cadastral_class,
             :micro_zone,
             :income,
@@ -74,7 +75,7 @@ module Api
       def include_params
         {
             body: {:only => :name},
-            cadastral_kind: {:only => :name},
+            kind: {cadastral_kind: {}},
             compliance: {:only => :name},
         }
       end

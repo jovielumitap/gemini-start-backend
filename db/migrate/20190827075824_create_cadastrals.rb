@@ -1,7 +1,7 @@
 class CreateCadastrals < ActiveRecord::Migration[5.1]
   def change
     create_table :cadastrals do |t|
-      t.string :carastral_type
+      t.string :cadastral_type
       t.string :province
       t.string :section_register
       t.string :fg

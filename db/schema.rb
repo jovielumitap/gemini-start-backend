@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190827084440) do
+ActiveRecord::Schema.define(version: 20190829172147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20190827084440) do
   end
 
   create_table "cadastrals", force: :cascade do |t|
-    t.string "carastral_type"
+    t.string "cadastral_type"
     t.string "province"
     t.string "section_register"
     t.string "fg"
@@ -106,10 +106,10 @@ ActiveRecord::Schema.define(version: 20190827084440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "body_id", null: false
-    t.bigint "cadastral_kind_id", null: false
     t.bigint "compliance_id", null: false
+    t.string "part_fg"
+    t.integer "kind_id"
     t.index ["body_id"], name: "index_cadastrals_on_body_id"
-    t.index ["cadastral_kind_id"], name: "index_cadastrals_on_cadastral_kind_id"
     t.index ["compliance_id"], name: "index_cadastrals_on_compliance_id"
   end
 
@@ -335,7 +335,6 @@ ActiveRecord::Schema.define(version: 20190827084440) do
   add_foreign_key "body_systems", "bodies"
   add_foreign_key "buildings", "building_types"
   add_foreign_key "cadastrals", "bodies"
-  add_foreign_key "cadastrals", "cadastral_kinds"
   add_foreign_key "cadastrals", "compliances"
   add_foreign_key "certificates", "bodies"
   add_foreign_key "certificates", "certificate_types"
